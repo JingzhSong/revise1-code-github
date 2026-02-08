@@ -41,7 +41,8 @@ path1 = ['_N=',num2str(N),'nc=',num2str(nc),'nkx=',num2str(nkx),'nkz=',num2str(n
 
 %% read data
 uvwp = 'u';
-path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+% path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+path0 = [wall,'/',uvwp];
 path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];
@@ -52,7 +53,8 @@ u_vec = squeeze(sum(cmax((nkx-n1+1):end,(nkx-n2+1):end,N/2:end) .* h((nkx-n1+1):
 
 %% read data
 uvwp = 'v';
-path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+% path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+path0 = [wall,'/',uvwp];
 path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];
@@ -63,7 +65,8 @@ v_vec = squeeze(sum(cmax((nkx-n1+1):end,(nkx-n2+1):end,N/2:end) .* h((nkx-n1+1):
 
 %% read data
 uvwp = 'w';
-path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+% path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+path0 = [wall,'/',uvwp];
 path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];
@@ -74,7 +77,8 @@ w_vec = squeeze(sum(cmax((nkx-n1+1):end,(nkx-n2+1):end,N/2:end) .* h((nkx-n1+1):
 
 %%
 uvwp = 'p';
-path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+% path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+path0 = [wall,'/',uvwp];
 path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];

@@ -81,8 +81,8 @@ omegaVector = linspace(0.1,3000,nc);
 [KX OMEGA] = meshgrid(kxVector,omegaVector);
 
 figure;
-pcolor(KX,OMEGA,log10(PSD)); % 整体积分是1，归一化
-% pcolor(KX,OMEGA,log10(spec)'); % 不归一化
+pcolor(KX,OMEGA,log10(PSD)); % normalize
+% pcolor(KX,OMEGA,log10(spec)'); % no normalize
 xlabel('$k_x$','Interpreter','latex');
 ylabel('$\omega$','Interpreter','latex');
 hold on

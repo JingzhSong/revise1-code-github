@@ -1,15 +1,11 @@
 clear
 clc
 
-% N = 400;
-% R = 6700;
-N = 300;
-R = 3300;
-% N = 200;
-% R = 2000;
+% for compliant walls
+N=300;
+R=3300;
+
 nc = 201;
-% nkx = 120; % 原来的kplus-70_final后缀
-% nkz = 120;
 nkx = 100;
 nkz = 100;
 method = 'IOA';
@@ -19,10 +15,7 @@ Y = [];
 uvwp = 'p';
 
 path0 = [wall,'/',uvwp];
-% 原来的kplus-70_final后缀存在下面
-% path0 = ['K:/convection/',wall,'/',uvwp];
-% 更新的w_weight bug的lambda1.7_4后缀存在下面
-% path0 = ['K:/revise version code/convection/',wall,'/',uvwp];
+
 
 if strcmp(wall, 'rigid')
     %     path1 = ['_N=',num2str(N),'nc=',num2str(nc),'nkx=',num2str(nkx),'nkz=',num2str(nkz),'_R=',num2str(R),eddy,'kplus-70_final'];
@@ -33,17 +26,9 @@ else
     path1 = ['_N=',num2str(N),'nc=',num2str(nc),'nkx=',num2str(nkx),'nkz=',num2str(nkz),'_R=',num2str(R),'_Cm=',num2str(Cm),'_Ck=',num2str(Ck),'_Cd=',num2str(Cd),eddy,'lambda1.7_4'];
 end
 
-% 直接读取cmax
 path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 
-% 原来是取的kx^+的范围一致
-% kxVector = logspace(-7,0,nkx).*R;
-% kzVector = logspace(-7,0,nkz).*R;
-% lambdaxVector = 2.*pi./kxVector .*R;
-% lambdazVector = 2.*pi./kzVector .*R;
-
-% 新的取的lambda_x的范围一致
 lambdaxVector = logspace(1.7,4,nkx);
 lambdazVector = logspace(1.7,4,nkx);
 % kxVector = linspace(10,160,nkx);
@@ -80,7 +65,7 @@ if strcmp(wall, 'com')
     end
 end
 
-%%
+%% plot figures
 figure;
 set(gcf,'unit','centimeters','position',[10 7 40 13]);
 
@@ -128,7 +113,6 @@ colormap(mymap);
 % colormap(redblue1(cormin,cormax));
 % caxis([cormin,cormax]);
 
-
 set(gca,'xminortick','on');
 set(gca,'ticklength',[0.02 0.01]);
 set(gca,'layer','top')
@@ -165,15 +149,14 @@ end
 set(gca,'unit','centimeters','position',[3.2,2.7,9,9],'fontsize',fontn,'fontname','Times')
 
 
-%%
+%% panel two
 subplot(1,3,2)
 % yi = length(find(yplus > 15));
 yi = length(find(yplus > 24));
 fprintf('y=%d \n',yplus(yi));
 c = cmax(:,:,yi);
 
-% Divided by the local speed
-
+% Divided by the model speed
 if strcmp(wall, 'rigid')
     pcolor(lambdaxVector,lambdazVector,c'./U0(yi)); hold on
 else
@@ -233,7 +216,7 @@ end
 set(gca,'unit','centimeters','position',[15,2.7,9,9],'fontsize',fontn,'fontname','Times')
 set(gca,'fontsize',fontn,'fontname','Times')
 
-%%
+%% panel three
 subplot(1,3,3)
 % yi = length(find(yplus > 105));
 yi = length(find(yplus > 95));
@@ -241,14 +224,8 @@ yi = length(find(yplus > 95));
 fprintf('y=%d \n',yplus(yi));
 c = cmax(:,:,yi);
 
-% Divided by the local speed
+% Divided by the model speed
 pcolor(lambdaxVector,lambdazVector,c'./U0(yi)); hold on
-% if R == 3300
-%     uc=26;
-% else
-%     uc = 28;
-% end
-% pcolor(lambdaxVector,lambdazVector,c'./0.53./uc); hold on
 set(gca,'xscale','log')
 set(gca,'yscale','log')
 xticks(logspace(1,6,6))
@@ -256,28 +233,17 @@ yticks(logspace(1,6,6))
 xlabel('${\lambda}_x^+$','Interpreter','latex');
 ylabel('${\lambda}_z^+$','Interpreter','latex');
 
-% if R == 3300
-%     title('$ y^+ \approx 113 $','Interpreter','latex');
-% else
-%     title('$ y^+ \approx 110 $','Interpreter','latex');
-% end
-
 if strcmp(wall, 'rigid')
     title('$ y^+ \approx 99 $','Interpreter','latex');
 end
 if strcmp(wall, 'com')
     title('$ y^+ \approx 96 $','Interpreter','latex');
 end
-% title('$ y^+ \approx 31 $','Interpreter','latex');
-% title('$ y^+ = 90 \approx 0.5 \, y_c^+ $','Interpreter','latex');
-% title('$ y^+ = 186 \approx \, y_c^+ $','Interpreter','latex');
-% title('$ y^+ = 162 \approx \, y_c^+ $','Interpreter','latex');
 shading interp
 load('MyColormaps.mat')
 colormap(mymap);
 % colormap(redblue1(cormin,cormax));
 % caxis([cormin,cormax]);
-
 
 h=colorbar;
 h.Label.Interpreter = 'latex';
@@ -291,7 +257,6 @@ else
     h.Ticks=[1,2,3,4,5];
 end
 h.Ticks=0:0.2:2;
-
 
 set(gca,'xminortick','on');
 set(gca,'ticklength',[0.02 0.01]);
@@ -324,7 +289,6 @@ end
 set(gca,'unit','centimeters','position',[26.7,2.7,9,9],'fontsize',fontn,'fontname','Times')
 
 print('-dpng','-r300', ['cmaxk',path1,'_rev.png'])
-
 
 
 

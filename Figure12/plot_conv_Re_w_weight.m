@@ -15,7 +15,6 @@ Y = [];
 lambdax_min = 500;
 lambdaz_min = 80;
 
-
 figure;
 nline=3;
 %% read data
@@ -51,7 +50,7 @@ load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];
 load([path,'.mat'],'psd_ave');
 
-h = psd_ave.*kx_matrix.*kx_matrix.*kx_matrix.*kx_matrix.*kz_matrix; % 加权，log积分要乘kx*kz
+h = psd_ave.*kx_matrix.*kx_matrix.*kx_matrix.*kx_matrix.*kz_matrix; % log integeral need kx*kz
 u_vec1 = squeeze(sum(cmax((nkx-n1+1):end,(nkx-n2+1):end,N/2:end) .* h((nkx-n1+1):end,(nkx-n2+1):end,N/2:end),[1 2])) ./ squeeze(sum(h((nkx-n1+1):end,(nkx-n2+1):end,N/2:end),[1 2])); %小尺度不算
 
 semilogx(yplus(N/2+n:end,1),u_vec1(n+1:end),'--b','linewidth',nline); hold on
@@ -87,7 +86,7 @@ path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];
 load([path,'.mat'],'psd_ave');
-h = psd_ave.*kx_matrix.*kx_matrix.*kx_matrix.*kx_matrix.*kz_matrix; % 加权，log积分要乘kx*kz
+h = psd_ave.*kx_matrix.*kx_matrix.*kx_matrix.*kx_matrix.*kz_matrix; 
 u_vec2 = squeeze(sum(cmax((nkx-n1+1):end,(nkx-n2+1):end,N/2:end) .* h((nkx-n1+1):end,(nkx-n2+1):end,N/2:end),[1 2])) ./ squeeze(sum(h((nkx-n1+1):end,(nkx-n2+1):end,N/2:end),[1 2])); %小尺度不算
 
 semilogx(yplus(N/2+n:end,1),u_vec2(n+1:end),'--','Color',[0.196 0.804 0.196],'linewidth',nline); hold on
@@ -123,7 +122,7 @@ path = [path0,'/cmax',path1];
 load([path,'.mat'],'cmax');
 path = [path0,'/psd_kx_kz',path1];
 load([path,'.mat'],'psd_ave');
-h = psd_ave.*kx_matrix.*kx_matrix.*kx_matrix.*kx_matrix.*kz_matrix; % 加权，log积分要乘kx*kz
+h = psd_ave.*kx_matrix.*kx_matrix.*kx_matrix.*kx_matrix.*kz_matrix;
 u_vec3 = squeeze(sum(cmax((nkx-n1+1):end,(nkx-n2+1):end,N/2:end) .* h((nkx-n1+1):end,(nkx-n2+1):end,N/2:end),[1 2])) ./ squeeze(sum(h((nkx-n1+1):end,(nkx-n2+1):end,N/2:end),[1 2])); %小尺度不算
 
 semilogx(yplus(N/2+n:end,1),u_vec3(n+1:end),'--r','linewidth',nline); hold on
